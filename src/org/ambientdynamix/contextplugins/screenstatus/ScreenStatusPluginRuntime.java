@@ -20,7 +20,7 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 	private final String TAG = "SCREENSTATUS";
 	private static ScreenStatusPluginRuntime context;
 	private BroadcastReceiver receiver;
-	Timer timer;
+	//Timer timer;
 
 	@Override
 	public void start() 
@@ -39,7 +39,7 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 		 * At this point, the plug-in should cancel any ongoing context scans, if there are any.
 		 */
 		Log.i(TAG, "Stopped!");
-		Timer.stop();
+		//Timer.stop();
 	}
 
 	@Override
