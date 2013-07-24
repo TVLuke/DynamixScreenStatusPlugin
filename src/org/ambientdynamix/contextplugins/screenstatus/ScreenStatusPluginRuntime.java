@@ -81,7 +81,7 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 	{
 		if(contextInfoType.equals("org.ambientdynamix.contextplugins.context.info.device.screenstatus"))
 		{
-		handleContextRequest(requestId, contextInfoType);
+			handleContextRequest(requestId, contextInfoType);
 		}
 		if(contextInfoType.equals("org.ambientdynamix.contextplugins.context.action.device.screenstatus"))
 		{
