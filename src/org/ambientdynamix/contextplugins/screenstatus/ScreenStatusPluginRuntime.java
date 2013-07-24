@@ -49,6 +49,7 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 		 * At this point, the plug-in should release any resources.
 		 */
 		stop();
+		getSecuredContext().unregisterReceiver(receiver);
 		Log.i(TAG, "Destroyed!");
 	}
 
@@ -94,13 +95,14 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 		Log.d(TAG, "init");
 		//timer=new Timer();
 		IntentFilter filter = new IntentFilter();
-		filter.addAction("ACTION_SCREEN_ON");
-		filter.addAction("ACTION_SCREEN_OFF");
+		filter.addAction(Intent.ACTION_SCREEN_ON);
+		filter.addAction(Intent.ACTION_SCREEN_OFF);
 		receiver = new BroadcastReceiver() 
 		{
 		    @Override
 		    public void onReceive(Context context, Intent intent) 
 		    {
+		    	Log.d(TAG, "Update!");
 		    	sendUpdate(checkScreen());
 		    }
 		  };
