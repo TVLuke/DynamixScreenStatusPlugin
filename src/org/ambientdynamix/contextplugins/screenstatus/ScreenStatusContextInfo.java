@@ -33,7 +33,7 @@ public class ScreenStatusContextInfo implements IContextInfo, IDeviceScreenConte
 		
 	ScreenStatusContextInfo(boolean x)
 	{
-
+		screenstatus=x;
 	}
 	
 	public ScreenStatusContextInfo(Parcel in) 

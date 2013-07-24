@@ -21,7 +21,7 @@ import android.view.WindowManager.LayoutParams;
 
 public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 {
-	private final String TAG = "SCREENSTATUS";
+	private final static String TAG = "SCREENSTATUS";
 	private static ScreenStatusPluginRuntime context;
 	private BroadcastReceiver receiver;
 	//Timer timer;
@@ -153,10 +153,12 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 	
 	public static void setScreen(boolean x)
 	{
+		Log.d(TAG, "set screen to");
 		Activity a = new Activity();
 		WindowManager.LayoutParams params = a.getWindow().getAttributes();
 		if(x)
 		{
+			Log.d(TAG, "true");
 			params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
 			//TODO restoring from original value
 			params.screenBrightness = 0.9f;
@@ -164,6 +166,7 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 		}
 		else
 		{
+			Log.d(TAG, "false");
 			params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
 			//TODO Store original brightness value
 			params.screenBrightness = 0.1f;
