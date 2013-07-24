@@ -47,8 +47,9 @@ public class Timer
 		@Override
 		public void run() 
 		{
-			Log.d(TAG, "run");
+			//Log.d(TAG, "run");
 			boolean screenstatus=ScreenStatusPluginRuntime.checkScreen();
+			//Log.d(TAG, "screen="+screenstatus);
 			if(screenOn!=screenstatus)
 			{
 				ScreenStatusPluginRuntime.sendUpdate(screenstatus);

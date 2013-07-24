@@ -6,8 +6,10 @@ import org.ambientdynamix.api.contextplugin.*;
 import org.ambientdynamix.api.contextplugin.security.PrivacyRiskLevel;
 import org.ambientdynamix.api.contextplugin.security.SecuredContextInfo;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
@@ -17,6 +19,7 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 {
 	private final String TAG = "SCREENSTATUS";
 	private static ScreenStatusPluginRuntime context;
+	private BroadcastReceiver receiver;
 	Timer timer;
 
 	@Override
@@ -89,7 +92,19 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 	public void init(PowerScheme arg0, ContextPluginSettings arg1) throws Exception 
 	{
 		Log.d(TAG, "init");
-		timer=new Timer();
+		//timer=new Timer();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction("ACTION_SCREEN_ON");
+		filter.addAction("ACTION_SCREEN_OFF");
+		receiver = new BroadcastReceiver() 
+		{
+		    @Override
+		    public void onReceive(Context context, Intent intent) 
+		    {
+		    	sendUpdate(checkScreen());
+		    }
+		  };
+		getSecuredContext().registerReceiver(receiver, filter);
 		context=this;
 		// TODO Auto-generated method stub
 		
