@@ -6,6 +6,7 @@ import org.ambientdynamix.api.contextplugin.*;
 import org.ambientdynamix.api.contextplugin.security.PrivacyRiskLevel;
 import org.ambientdynamix.api.contextplugin.security.SecuredContextInfo;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
 
 
 public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
@@ -83,8 +87,8 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 		{
 			Boolean status = scanConfig.getBoolean("screenstatus");
 			context=this;
-			 ScreenStatusContextAction ssca = new ScreenStatusContextAction();
-			 ssca.screenOn(status);
+			ScreenStatusContextAction ssca = new ScreenStatusContextAction();
+			ssca.screenOn(false);
 		}
 		context=this;
 	}
@@ -148,7 +152,22 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 	
 	public static void setScreen(boolean x)
 	{
-		
+		Activity a = new Activity();
+		WindowManager.LayoutParams params = a.getWindow().getAttributes();
+		if(x)
+		{
+			params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+			//TODO restoring from original value
+			params.screenBrightness = 0.9f;
+			a.getWindow().setAttributes(params);
+		}
+		else
+		{
+			params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+			//TODO Store original brightness value
+			params.screenBrightness = 0.1f;
+			a.getWindow().setAttributes(params);	
+		}
 	}
 
 }
