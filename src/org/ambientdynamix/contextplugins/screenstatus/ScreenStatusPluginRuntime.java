@@ -85,6 +85,7 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 		}
 		if(contextInfoType.equals("org.ambientdynamix.contextplugins.context.action.device.screenstatus"))
 		{
+			Log.d(TAG, "Action Context Requested");
 			Boolean status = scanConfig.getBoolean("screenstatus");
 			context=this;
 			ScreenStatusContextAction ssca = new ScreenStatusContextAction();
