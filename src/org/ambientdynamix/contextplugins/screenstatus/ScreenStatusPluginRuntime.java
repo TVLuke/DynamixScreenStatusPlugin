@@ -66,6 +66,7 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 	@Override
 	public void handleContextRequest(UUID requestId, String contextInfoType) 
 	{
+		Log.d(TAG, "normal context request");
 		PowerManager powerManager = (PowerManager) this.getSecuredContext().getSystemService(this.getSecuredContext().POWER_SERVICE);
 		boolean screenstatus=powerManager.isScreenOn();
 		if(contextInfoType.equals("org.ambientdynamix.contextplugins.context.info.device.screenstatus"))
@@ -89,7 +90,7 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 			Boolean status = scanConfig.getBoolean("screenstatus");
 			context=this;
 			ScreenStatusContextAction ssca = new ScreenStatusContextAction();
-			ssca.screenOn(false);
+			ssca.screenOn(status);
 		}
 		context=this;
 	}
@@ -151,27 +152,33 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 		return false;
 	}
 	
-	public static void setScreen(boolean x)
+	public static void setScreen(final boolean x)
 	{
 		Log.d(TAG, "set screen to");
-		Activity a = new Activity();
-		WindowManager.LayoutParams params = a.getWindow().getAttributes();
-		if(x)
+		final Activity a = new Activity();
+		a.runOnUiThread(new Runnable() 
 		{
-			Log.d(TAG, "true");
-			params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-			//TODO restoring from original value
-			params.screenBrightness = 0.9f;
-			a.getWindow().setAttributes(params);
+			  public void run() 
+			  {
+				  WindowManager.LayoutParams params = a.getWindow().getAttributes();
+					if(x)
+					{
+						Log.d(TAG, "true");
+						params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+						//TODO restoring from original value
+						params.screenBrightness = 0.9f;
+						a.getWindow().setAttributes(params);
+					}
+					else
+					{
+						Log.d(TAG, "false");
+						params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+						//TODO Store original brightness value
+						params.screenBrightness = 0.1f;
+						a.getWindow().setAttributes(params);	
+					}
+			  }
+			});
 		}
-		else
-		{
-			Log.d(TAG, "false");
-			params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-			//TODO Store original brightness value
-			params.screenBrightness = 0.1f;
-			a.getWindow().setAttributes(params);	
-		}
-	}
 
 }
