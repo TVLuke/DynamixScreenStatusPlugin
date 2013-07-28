@@ -24,7 +24,7 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 	private final static String TAG = "SCREENSTATUS";
 	private static ScreenStatusPluginRuntime context;
 	private BroadcastReceiver receiver;
-	//Timer timer;
+
 
 	@Override
 	public void start() 
@@ -80,17 +80,10 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 	@Override
 	public void handleConfiguredContextRequest(UUID requestId, String contextInfoType, Bundle scanConfig) 
 	{
+		Log.d(TAG, "configured context request");
 		if(contextInfoType.equals("org.ambientdynamix.contextplugins.context.info.device.screenstatus"))
 		{
 			handleContextRequest(requestId, contextInfoType);
-		}
-		if(contextInfoType.equals("org.ambientdynamix.contextplugins.context.action.device.screenstatus"))
-		{
-			Log.d(TAG, "Action Context Requested");
-			Boolean status = scanConfig.getBoolean("screenstatus");
-			context=this;
-			ScreenStatusContextAction ssca = new ScreenStatusContextAction();
-			ssca.screenOn(status);
 		}
 		context=this;
 	}
@@ -108,7 +101,8 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 		    @Override
 		    public void onReceive(Context context, Intent intent) 
 		    {
-		    	Log.d(TAG, "Update!");
+		    	boolean x = checkScreen();
+		    	Log.d(TAG, "Update! to "+x);
 		    	sendUpdate(checkScreen());
 		    }
 		  };
@@ -151,34 +145,5 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 		}
 		return false;
 	}
-	
-	public static void setScreen(final boolean x)
-	{
-		Log.d(TAG, "set screen to");
-		final Activity a = new Activity();
-		a.runOnUiThread(new Runnable() 
-		{
-			  public void run() 
-			  {
-				  WindowManager.LayoutParams params = a.getWindow().getAttributes();
-					if(x)
-					{
-						Log.d(TAG, "true");
-						params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-						//TODO restoring from original value
-						params.screenBrightness = 0.9f;
-						a.getWindow().setAttributes(params);
-					}
-					else
-					{
-						Log.d(TAG, "false");
-						params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-						//TODO Store original brightness value
-						params.screenBrightness = 0.1f;
-						a.getWindow().setAttributes(params);	
-					}
-			  }
-			});
-		}
 
 }
