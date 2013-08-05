@@ -72,7 +72,7 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 		if(contextInfoType.equals("org.ambientdynamix.contextplugins.context.info.device.screenstatus"))
 		{
 			SecuredContextInfo aci= new SecuredContextInfo(new ScreenStatusContextInfo(screenstatus), PrivacyRiskLevel.LOW);
-			sendContextEvent(requestId, aci, 1000);
+			sendContextEvent(requestId, aci, 2000);
 		}
 		context=this;
 	}
