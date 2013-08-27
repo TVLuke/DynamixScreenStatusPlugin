@@ -98,7 +98,7 @@ public class ScreenStatusContextInfo implements IContextInfo, IDeviceScreenConte
 			{
 				result="off";
 			}
-			return "<data><screenstatus>"+result+"</screenstatus></data>";
+			return "<screenstatus>"+result+"</screenstatus>";
 		}
 		else if (format.equalsIgnoreCase("JSON"))
 		{
