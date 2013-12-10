@@ -123,7 +123,7 @@ public class ScreenStatusContextInfo implements IContextInfo, IDeviceScreenConte
 					"xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" +
 					"xmlns:z.0=\"http://dynamix.org/semmodel/org.ambientdynamix.contextplugins.context.info.device.screen/0.1/\"\n" +
 					"xmlns:z.1=\"http://dynamix.org/semmodel/0.1/\" > \n";
-			result=result+" <rdf:Description rdf:about=\"http://purl.org/device_RANDOMID\">\n";
+			result=result+" <rdf:Description rdf:about=\"http://purl.org/device_"+ScreenStatusPluginRuntime.deviceid+"\">\n";
 			result=result+" <rdf:type>http://purl.org/device/screenstatus</rdf:type>\n";
 			result=result+"<z.0:status>"+screenstatus+"</z.0:status>\n" +
 							"  </rdf:Description>\n </rdf:RDF>";

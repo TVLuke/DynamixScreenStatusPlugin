@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.provider.Settings.Secure;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -40,7 +41,7 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 	private final static String TAG = "SCREENSTATUS";
 	private static ScreenStatusPluginRuntime context;
 	private BroadcastReceiver receiver;
-
+	public static String deviceid="";
 
 	@Override
 	public void start() 
@@ -156,6 +157,7 @@ public class ScreenStatusPluginRuntime extends AutoReactiveContextPluginRuntime
 		if(context!=null)
 		{
 			PowerManager powerManager = (PowerManager) context.getSecuredContext().getSystemService(context.getSecuredContext().POWER_SERVICE);
+			deviceid=Secure.getString(context.getSecuredContext().getContentResolver(), Secure.ANDROID_ID); 
 			boolean screenstatus=powerManager.isScreenOn();
 			return screenstatus;
 		}
